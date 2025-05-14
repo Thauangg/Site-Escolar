@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Turmas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(45deg, #1a2980, #26d0ce);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .header h1 {
+            color: #2d3436;
+            font-size: 2em;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background: #1a2980;
+        }
+
+        .btn-primary:hover {
+            background: #0f1b4d;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-success {
+            background: #2ecc71;
+        }
+
+        .btn-success:hover {
+            background: #27ae60;
+        }
+
+        .turma-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .turma-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .turma-nome {
+            font-size: 1.5em;
+            color: #2d3436;
+            font-weight: bold;
+        }
+
+        .turma-info {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .alunos-list {
+            margin-top: 15px;
+        }
+
+        .aluno-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .aluno-info {
+            flex-grow: 1;
+        }
+
+        .aluno-nome {
+            font-weight: bold;
+            color: #2d3436;
+        }
+
+        .aluno-media {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .delete-form {
+            display: inline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            text-align: right;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #2d3436;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .success-message {
+            color: #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Turmas e Alunos</h1>
+            <div class="user-info">
+                <p>Professor: {{ professor_nome }}</p>
+                <a href="{% url 'logout' %}" class="btn btn-danger">Sair</a>
+                <a href="{% url 'adicionar_notas' %}" class="btn btn-primary">Voltar</a>
+            </div>
+        </div>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="{% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <a href="{% url 'adicionar_turma' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nova Turma
+        </a>
+
+        {% for turma in turmas %}
+        <div class="turma-card">
+            <div class="turma-header">
+                <div>
+                    <div class="turma-nome">{{ turma.nome }}</div>
+                    <div class="turma-info">Criada em: {{ turma.data_criacao|date:"d/m/Y H:i" }}</div>
+                </div>
+                <div>
+                    <a href="{% url 'adicionar_notas' %}?turma={{ turma.id }}" class="btn btn-success">
+                        <i class="fas fa-user-plus"></i> Adicionar Aluno
+                    </a>
+                    <a href="{% url 'visualizar_notas' %}?turma={{ turma.id }}" class="btn btn-primary">
+                        <i class="fas fa-chart-bar"></i> Ver Notas
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="turma-card">
+            <div class="turma-info">Nenhuma turma cadastrada ainda.</div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html> 

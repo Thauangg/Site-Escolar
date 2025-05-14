@@ -5,10 +5,19 @@ class Professor(AbstractUser):
     email = models.EmailField(unique=True)
 
     def __str__(self):
-        return self.username  # ou use self.nome se você adicionar um campo nome
+        return self.username
+
+class Turma(models.Model):
+    nome = models.CharField(max_length=100)
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
+    data_criacao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nome
 
 class Aluno(models.Model):
     nome = models.CharField(max_length=100)
+    turma = models.ForeignKey(Turma, on_delete=models.CASCADE, related_name='alunos', null=True, blank=True)
 
     def __str__(self):
         return self.nome
