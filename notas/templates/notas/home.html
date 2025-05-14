@@ -103,6 +103,7 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
 
         .feature-item:hover {
@@ -113,6 +114,50 @@
             font-size: 2em;
             color: #1a2980;
             margin-bottom: 10px;
+        }
+
+        .feature-content {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feature-description {
+            color: #636e72;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .feature-list li {
+            margin: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: '✓';
+            color: #1a2980;
+            position: absolute;
+            left: 0;
         }
 
         .buttons {
@@ -190,17 +235,50 @@
         </p>
 
         <div class="features">
-            <div class="feature-item">
+            <div class="feature-item" onclick="toggleFeature('analise')">
                 <i class="fas fa-chart-line feature-icon"></i>
                 <h3>Análise de Desempenho</h3>
+                <div id="analise" class="feature-content">
+                    <div class="feature-description">
+                        <p>Ferramentas avançadas para análise do desempenho dos alunos:</p>
+                        <ul class="feature-list">
+                            <li>Gráficos de progresso individual</li>
+                            <li>Relatórios de desempenho por turma</li>
+                            <li>Análise comparativa entre períodos</li>
+                            <li>Identificação de pontos de melhoria</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="feature-item">
+            <div class="feature-item" onclick="toggleFeature('gestao')">
                 <i class="fas fa-users feature-icon"></i>
                 <h3>Gestão de Alunos</h3>
+                <div id="gestao" class="feature-content">
+                    <div class="feature-description">
+                        <p>Sistema completo de gestão de alunos:</p>
+                        <ul class="feature-list">
+                            <li>Cadastro completo de estudantes</li>
+                            <li>Controle de frequência</li>
+                            <li>Histórico acadêmico</li>
+                            <li>Comunicação com responsáveis</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="feature-item">
+            <div class="feature-item" onclick="toggleFeature('seguranca')">
                 <i class="fas fa-shield-alt feature-icon"></i>
                 <h3>Segurança Total</h3>
+                <div id="seguranca" class="feature-content">
+                    <div class="feature-description">
+                        <p>Proteção completa dos dados:</p>
+                        <ul class="feature-list">
+                            <li>Criptografia de dados sensíveis</li>
+                            <li>Controle de acesso por níveis</li>
+                            <li>Backup automático</li>
+                            <li>Auditoria de ações</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -213,5 +291,20 @@
             </a>
         </div>
     </div>
+
+    <script>
+        function toggleFeature(featureId) {
+            const featureContent = document.getElementById(featureId);
+            const allContents = document.querySelectorAll('.feature-content');
+            
+            allContents.forEach(content => {
+                if (content.id === featureId) {
+                    content.classList.toggle('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        }
+    </script>
 </body>
 </html>

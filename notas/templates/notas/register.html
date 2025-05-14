@@ -144,9 +144,39 @@
             margin: 5px 0 0 0;
             font-size: 0.9em;
         }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:hover {
+            transform: translateX(-3px);
+            background: white;
+        }
+
+        .back-button i {
+            color: #1a2980;
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
+    <a href="{% url 'home' %}" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+    </a>
     <div class="container">
         <h1>Registrar Professor</h1>
         
