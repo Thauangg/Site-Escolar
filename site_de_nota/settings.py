@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-%8s2cc(kj(=mga-!+k8l6w5-ooxd473z@_rmhvnn4grjb!f!hr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',     # localhost
+    'localhost',
+    'site-de-nota.onrender.com',
+    'site-escolar.onrender.com',
+    ]
 
 
 # Application definition
@@ -131,7 +136,12 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # Configurações de segurança adicionais
 CSRF_COOKIE_SECURE = False  # Deve ser True em produção com HTTPS
 CSRF_COOKIE_HTTPONLY = True  # Impede acesso ao CSRF via JavaScript
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000']  # Domínios confiáveis para o CSRF
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'http://localhost:8000',
+    'https://site-de-nota.onrender.com',
+    'https://site-escolar.onrender.com',
+    ]  # Domínios confiáveis para o CSRF
 
 SESSION_COOKIE_SECURE = False  # Deve ser True em produção com HTTPS
 SESSION_COOKIE_HTTPONLY = True  # Impede acesso ao cookie de sessão via JavaScript
