@@ -125,6 +125,9 @@ LOCALE_PATHS = [
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+# Diretório onde o collectstatic vai coletar os arquivos estáticos para produção
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 # Configurações de segurança adicionais
 CSRF_COOKIE_SECURE = False  # Deve ser True em produção com HTTPS
 CSRF_COOKIE_HTTPONLY = True  # Impede acesso ao CSRF via JavaScript
