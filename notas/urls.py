@@ -9,6 +9,7 @@ from .views import (
     deletar_notas,
     adicionar_turma,
     visualizar_turmas,
+    excluir_turma,
 )
 
 urlpatterns = [
@@ -21,6 +22,7 @@ urlpatterns = [
     path('adicionar_notas/', adicionar_notas, name='adicionar_notas'),
     path('visualizar_notas/', visualizar_notas, name='visualizar_notas'),
     path('deletar_notas/<int:aluno_id>/', deletar_notas, name='deletar_notas'),
+    path('excluir_turma/', excluir_turma, name='excluir_turma'),
 
     # Rotas de autenticação
     path('register/', register, name='register'),

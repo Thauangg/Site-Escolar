@@ -251,3 +251,31 @@ def visualizar_turmas(request):
             'turmas': [],
             'professor_nome': request.user.username
         })
+
+@login_required
+def excluir_turma(request):
+    if request.method == 'POST':
+        try:
+            turma_id = request.POST.get('turma_id')
+            if not turma_id:
+                raise ValueError('ID da turma não fornecido')
+
+            turma = Turma.objects.get(id=turma_id, professor=request.user)
+            
+            # Excluir todas as notas dos alunos da turma
+            for aluno in turma.alunos.all():
+                Notas.objects.filter(aluno=aluno).delete()
+            
+            # Excluir todos os alunos da turma
+            turma.alunos.all().delete()
+            
+            # Excluir a turma
+            turma.delete()
+            
+            messages.success(request, f'Turma "{turma.nome}" excluída com sucesso!')
+        except Turma.DoesNotExist:
+            messages.error(request, 'Turma não encontrada')
+        except Exception as e:
+            messages.error(request, f'Erro ao excluir turma: {str(e)}')
+    
+    return redirect('visualizar_turmas')

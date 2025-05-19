@@ -250,6 +250,9 @@
                     <a href="{% url 'visualizar_notas' %}?turma={{ turma.id }}" class="btn btn-primary">
                         <i class="fas fa-chart-bar"></i> Ver Notas
                     </a>
+                    <button onclick="confirmarExclusao('{{ turma.id }}', '{{ turma.nome }}')" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Excluir
+                    </button>
                 </div>
             </div>
         </div>
@@ -259,5 +262,45 @@
         </div>
         {% endfor %}
     </div>
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div id="modalExclusao" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirmar Exclusão</h2>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir a turma <span id="turmaNome"></span>?</p>
+                <p class="error-message">Esta ação não pode ser desfeita!</p>
+            </div>
+            <div class="modal-footer">
+                <button onclick="fecharModal()" class="btn btn-primary">Cancelar</button>
+                <form id="formExclusao" method="POST" action="{% url 'excluir_turma' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="turma_id" id="turmaId">
+                    <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmarExclusao(turmaId, turmaNome) {
+            document.getElementById('turmaId').value = turmaId;
+            document.getElementById('turmaNome').textContent = turmaNome;
+            document.getElementById('modalExclusao').style.display = 'flex';
+        }
+
+        function fecharModal() {
+            document.getElementById('modalExclusao').style.display = 'none';
+        }
+
+        // Fechar modal quando clicar fora dele
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('modalExclusao')) {
+                fecharModal();
+            }
+        }
+    </script>
 </body>
 </html> 
